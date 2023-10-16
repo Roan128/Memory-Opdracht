@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Memory.Gui
+namespace Memory.GUI
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

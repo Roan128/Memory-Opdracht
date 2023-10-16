@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Memory.Gui
+namespace Memory.GUI
 {
     [Application]
     public class MainApplication : MauiApplication

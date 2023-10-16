@@ -1,4 +1,4 @@
-﻿namespace Memory.Gui
+﻿namespace Memory.GUI
 {
     public partial class MainPage : ContentPage
     {

@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace Memory.Gui
+namespace Memory.GUI
 {
     public class Program
     {
