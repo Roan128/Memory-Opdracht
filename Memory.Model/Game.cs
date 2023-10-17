@@ -10,6 +10,8 @@
 
         public int Attempts {  get; set; }
 
+
+
         public int GetScore()
         {
             //Besteedde tijd berekenen
@@ -24,5 +26,28 @@
 
             return score;
         }
+
+
+        public void StartGame(Player player)
+        {
+            Console.WriteLine(player.Name);
+
+            while( Cards.Count() < (player.CardAmount * 2))
+            {
+                Card card = new Card();
+                Cards.Add(card);
+            }
+
+            Console.WriteLine("aantal kaarten: " + Cards.Count());
+        }
+
+        public void DisplayCards()
+        {
+            foreach(Card card in Cards) {
+                Console.WriteLine("Card id: "  + card.Id);
+            }
+        }
+
+
     }
 }
