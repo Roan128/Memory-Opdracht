@@ -39,6 +39,7 @@
             }
 
             Console.WriteLine("aantal kaarten: " + Cards.Count());
+            DisplayCards();
         }
 
         public void DisplayCards()
@@ -46,6 +47,18 @@
             foreach(Card card in Cards) {
                 Console.WriteLine("Card id: "  + card.Id);
             }
+            ChooseCards();
+        }
+
+        public void ChooseCards()
+        {
+            Attempts++;
+
+        }
+
+        public void CheckIfGameOver()
+        {
+
         }
 
 
