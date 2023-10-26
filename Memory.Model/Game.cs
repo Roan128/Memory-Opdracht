@@ -63,9 +63,11 @@ namespace Memory.Model
         public void ChooseCards()
         {
             Console.WriteLine("Pick the first card from the available cards");
+            Card choice1 = Cards[int.Parse(Console.ReadLine()) - 1];
 
             Console.WriteLine("Pick the second card from the available cards");
-           
+            Card choice2 = Cards[int.Parse(Console.ReadLine()) - 1];
+
 
             if (choice1.CardValue == choice2.CardValue)
             {
@@ -103,17 +105,9 @@ namespace Memory.Model
             return cards;
         }
 
-        public Card CheckIfCardExists(int choice)
+        public void CheckIfCardExists(int choice)
         {
-            try
-            {
-                Card choice = Cards[int.Parse(Console.ReadLine()) - 1];
-                return choice.CardValue;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Card does not exist, try again.");
-            }
+
         }
 
     }

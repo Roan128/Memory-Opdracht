@@ -52,4 +52,20 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Memory.Model\Memory.Model.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="GamePage.xaml.cs">
+	    <DependentUpon>GamePage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="GamePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
