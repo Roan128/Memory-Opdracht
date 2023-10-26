@@ -14,6 +14,35 @@ namespace Memory.Model
 
         public int CardAmount { get; set; }
 
+        public Score(int scoreAmount, string playerName, int cardAmount) {
+            ScoreAmount = scoreAmount;
+            PlayerName = playerName;
+            CardAmount = cardAmount;
 
+            //Meteen na aanmaken object checken of hij in de database komt.
+            CheckIfHighScore();
+        }
+
+        public void GetScore(string playername)
+        {
+            /*//Besteedde tijd berekenen
+            TimeSpan timespent = EndTime - StartTime;
+            int time = Math.Abs(timespent.Seconds);
+
+            //Kwadraat van kaart uitrekenen
+            int squareofcards = (int)Math.Pow(Cards.Count(), 2);
+
+            //Score berekenen
+            int scoreamount = (squareofcards / (time * Attempts)) * 1000;
+
+            Score score = new Score(scoreamount, playername, Cards.Count());
+
+            return score;*/
+        }
+
+        public void CheckIfHighScore()
+        {
+
+        }
     }
 }

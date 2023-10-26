@@ -30,3 +30,32 @@ Wanneer alle kaarten omgedraaid zijn is het spel afgelopen en wordt de highscore
 Highscore Van de gespeelde spellen wordt een lijst van highscores bijgehouden.
 Alleen wanneer een highscore in de top 10 komt, wordt de score opgeslagen. 
 Het aantal kaarten, de tijd en het aantal pogingen bepalen de score. ((Aantal kaarten)2 / (Tijd in seconden * aantal pogingen)) * 1000
+
+GAME (Console):
+Begin:
+1. Speler aanmaken
+
+2. Op basis van cardamount kaarten aanmaken, dit verdubbelen.
+
+3. Shuffelen van de list.
+
+Per beurt
+1. Meerdere kaarten op kop
+
+2. Kaarten kiezen die je wilt omdraaien. (max 2 per ronde)
+
+3.1 Als kaarten dezelfde value hebben: omgedraaid laten liggen.
+
+3.2 Als kaarten niet dezelfde value hebben: terug omdraaien.
+
+4. 1 t/m 3 blijft gebeuren tot alle kaarten zijn omgedraaid.
+
+5. Als alles is omgedraaid wordt er een score berekend.
+
+6. Vergelijken score met bestaande highscore.
+
+8.1 Toevoegen score als hij in de top 10 staat.
+
+8.2 Weggooien score als hij niet in de top 10 staat. 
+
+9. Stoppen spel, afsluiten of terug naar hoofdmenu.

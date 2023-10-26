@@ -18,5 +18,6 @@
         {
             Name = name;
             CardAmount = cardamount;
+        }
     }
 }
