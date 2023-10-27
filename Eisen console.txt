@@ -59,3 +59,9 @@ Per beurt
 8.2 Weggooien score als hij niet in de top 10 staat. 
 
 9. Stoppen spel, afsluiten of terug naar hoofdmenu.
+
+
+
+Stappen voor 2. Kaarten kiezen die je wilt omdraaien. (max 2 per ronde)
+
+Keuze: Console.Readline(), deze moet daarna geparsed worden naar int. Vervolgens wordt er gekeken of er een kaart met dat Id bestaat. Zo ja, dan een kaart returnen, zo niet dan error message geven en opnieuw beginnen.

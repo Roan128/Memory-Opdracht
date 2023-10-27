@@ -1,4 +1,4 @@
-﻿namespace Memory.Model
+﻿namespace Memory.Model.Classes
 {
     public class Card
     {
@@ -8,7 +8,8 @@
 
         public bool TurnedOver { get; set; } = false;
 
-        public Card(int id) {
+        public Card(int id)
+        {
             Id = id;
         }
 

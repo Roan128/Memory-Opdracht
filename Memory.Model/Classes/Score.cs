@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Memory.Model
+namespace Memory.Model.Classes
 {
     public class Score
     {
-        public int ScoreAmount { get; set; } 
+        public int ScoreAmount { get; set; }
 
         public string PlayerName { get; set; }
 
         public int CardAmount { get; set; }
 
-        public Score(int scoreAmount, string playerName, int cardAmount) {
+        public Score(int scoreAmount, string playerName, int cardAmount)
+        {
             ScoreAmount = scoreAmount;
             PlayerName = playerName;
             CardAmount = cardAmount;

@@ -1,4 +1,4 @@
-﻿namespace Memory.Model
+﻿namespace Memory.Model.Classes
 {
     public class Player
     {
