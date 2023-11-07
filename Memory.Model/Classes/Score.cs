@@ -12,38 +12,34 @@ namespace Memory.Model.Classes
 
         public string PlayerName { get; set; }
 
-        public int CardAmount { get; set; }
-
-        public Score(int scoreAmount, string playerName, int cardAmount)
+        public Score(string name)
         {
-            ScoreAmount = scoreAmount;
-            PlayerName = playerName;
-            CardAmount = cardAmount;
-
-            //Meteen na aanmaken object checken of hij in de database komt.
-            CheckIfHighScore();
+           PlayerName = name;
         }
 
-        public void GetScore(string playername)
+        public void GetScore(Game game)
         {
-            /*//Besteedde tijd berekenen
-            TimeSpan timespent = EndTime - StartTime;
+            //Besteedde tijd berekenen
+            TimeSpan timespent = game.EndTime - game.StartTime;
             int time = Math.Abs(timespent.Seconds);
+            Console.WriteLine($"Time spent: {time}");
 
             //Kwadraat van kaart uitrekenen
-            int squareofcards = (int)Math.Pow(Cards.Count(), 2);
+            int squareofcards = (int)Math.Pow(game.Cards.Count(), 2);
+            Console.WriteLine($"Kwadraat van kaarten {squareofcards}");
+            Console.WriteLine($"Pogingen: {game.Attempts}");
 
             //Score berekenen
-            int scoreamount = (squareofcards / (time * Attempts)) * 1000;
+            int scoreamount = (squareofcards / (time * game.Attempts)) * 1000;
 
-            Score score = new Score(scoreamount, playername, Cards.Count());
-
-            return score;*/
+            this.ScoreAmount = scoreamount;
         }
 
         public void CheckIfHighScore()
         {
 
         }
+
+        //TODO: Database maken, testen schrijven
     }
 }

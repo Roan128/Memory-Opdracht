@@ -8,18 +8,18 @@ namespace Memory.Model.Classes
     public class Game
     {
         public DateTime StartTime { get; set; } = DateTime.Now;
-
         public DateTime EndTime { get; set; }
 
         public List<Card> Cards = new List<Card> { };
-
         public int Attempts { get; set; }
+
+        private static Random rng = new Random();
 
         //Game starten zodra player aangemaakt is en kaarten gemaakt zijn.
         public void StartGame(Player player)
         {
             GenerateCards(player.CardAmount);
-            ShuffleCards(Cards);
+            ShuffleCards();
 
             while (CheckIfGameOver())
             {
@@ -27,10 +27,15 @@ namespace Memory.Model.Classes
                 ChooseCards();
             }
 
+            Score score = new Score(player.Name);
+            score.GetScore(this);
+            Console.WriteLine(score.ScoreAmount);
             Console.WriteLine("Game over");
         }
 
         //Aanmaken van kaarten op basis van hoeveelheid kaarten. Dit verdubbelen en randomizen.
+        //I wordt gebruik om een uniek Id te maken hierdoor kan de kaart niet twee keer gekozen worden.
+        //value wordt gebruikt om eenzelfde value te maken per paar. 
         public List<Card> GenerateCards(int cardamount)
         {
             int i = 0;
@@ -49,15 +54,12 @@ namespace Memory.Model.Classes
             return Cards;
         }
 
-        //Shuffled na het genereren van de kaarten alle kaarten door elkaar.
-        public List<Card> ShuffleCards(List<Card> cards)
-        {
-            return cards;
-        }
 
-        //Kaarten printen met Id erbij.
+        //Kaarten printen met list positie erbij.
+        //KLAAR, maar hoe console output testen?
         public void DisplayCards()
         {
+            int i = 9;
             foreach (Card card in Cards)
             {
                 if (card.TurnedOver)
@@ -66,13 +68,21 @@ namespace Memory.Model.Classes
                 }
                 else
                 {
-                    Console.WriteLine($" [{card.Id}] ");
+                    Console.WriteLine($" [{Cards.Count() - i }] ");
                 }
+                i--;
             }
         }
 
+        //KLAAR, TODO: Testen
+        public void ShuffleCards()
+        {
+            var shuffledcards = Cards.OrderBy(a => rng.Next()).ToList();
+            Cards = shuffledcards;
+        }
+
         //Functie om een kaart te kiezen.
-        //TODO: Try - catch bouwen om out of bounds te voorkomen, CardNotFound gebruiken.
+        //TODO: Refactoren, simpeler en testbaarder maken.
         public void ChooseCards()
         {
             Console.WriteLine("Pick a first card.");
@@ -81,21 +91,33 @@ namespace Memory.Model.Classes
             Console.WriteLine("Pick a second card.");
             Card choice2 = CheckIfCardExists(Console.ReadLine());
 
-
-            if (choice1.CardValue == choice2.CardValue)
+            if (choice1.CardValue == choice2.CardValue && 
+                choice1.Id != choice2.Id && 
+                !choice1.TurnedOver && 
+                !choice2.TurnedOver)
             {
                 choice1.TurnedOver = true;
                 choice2.TurnedOver = true;
                 Console.WriteLine("Correct!");
+            } 
+            else if (choice1.Id == choice2.Id)
+            {
+                Console.WriteLine("You cannot pick the same card twice, try again. An attempt has not been added.");
+                ChooseCards();           
+            } else if (choice1.TurnedOver || choice2.TurnedOver)
+            {
+                Console.WriteLine("One of the cards was already turned over, try again. An attempt has not been added.");
+                ChooseCards();
             }
             else
             {
-                Console.WriteLine("Value is not equal, try again.");
+                Console.WriteLine("Those are not the same cards! Try again. An attempt has been added.");
             }
             Attempts++;
         }
 
-        //Met linq kijken of er een kaart het Id heeft.
+        //Meer linq gebruiken.
+        //Kan misschien nog opgedeeld worden?
         public Card CheckIfCardExists(string choice)
         {
             Card pickedCard = null;
@@ -106,7 +128,15 @@ namespace Memory.Model.Classes
                 try
                 {
                     int parsedChoice = int.Parse(choice);
-                    pickedCard = Cards.FirstOrDefault(card => card.Id == parsedChoice);
+                    //Kan out of bounds error geven.
+                    try
+                    {
+                        pickedCard = Cards[parsedChoice - 1];
+                    } catch (ArgumentOutOfRangeException ex)
+                    {
+                        pickedCard = null;
+                    }
+                    
                     if (pickedCard == null)
                     {
                         throw new CardNotFoundException($"The card with id {choice} does not exist.");
@@ -133,18 +163,12 @@ namespace Memory.Model.Classes
         }
 
         //Checked of alle kaarten omgedraaid zijn.
+        //KLAAR, TODO: Testen schrijven.
         public bool CheckIfGameOver()
         {
-            int i = 0;
-            foreach (Card card in Cards)
-            {
-                if (card.TurnedOver)
-                {
-                    i++;
-                }
-            }
+            int turnedOverCards = Cards.Where(c => c.TurnedOver.Equals(true)).ToList().Count();
 
-            if (i == Cards.Count())
+            if (turnedOverCards == Cards.Count())
             {
                 EndTime = DateTime.Now;
                 return false;
@@ -152,6 +176,19 @@ namespace Memory.Model.Classes
             else
             {
                 return true;
+            }
+        }
+
+        public int Parser(string numberAsString)
+        {
+            try
+            {
+                int number = int.Parse(numberAsString);
+                return number;
+            } catch
+            {
+                Console.WriteLine("Incorrect number, type a whole number.");
+      
             }
         }
     }

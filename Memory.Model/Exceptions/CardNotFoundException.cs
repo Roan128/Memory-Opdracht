@@ -11,7 +11,7 @@ namespace Memory.Model.Exceptions
         public CardNotFoundException() { }
 
         public CardNotFoundException(string message) : base(message) {
-             Console.WriteLine(message);
+            
         }
     }
 }
