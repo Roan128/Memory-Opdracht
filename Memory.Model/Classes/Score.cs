@@ -28,11 +28,14 @@ namespace Memory.Model.Classes
             int squareofcards = (int)Math.Pow(game.Cards.Count(), 2);
             Console.WriteLine($"Kwadraat van kaarten {squareofcards}");
             Console.WriteLine($"Pogingen: {game.Attempts}");
+            int scorepart1 = time * game.Attempts;
+            int scorepart2 = squareofcards / scorepart1;
+
 
             //Score berekenen
-            int scoreamount = (squareofcards / (time * game.Attempts)) * 1000;
+            int scoreamount = scorepart2 * 1000;
 
-            this.ScoreAmount = scoreamount;
+            ScoreAmount = scoreamount;
         }
 
         public void CheckIfHighScore()

@@ -29,12 +29,12 @@ namespace Memory.Model.Classes
 
             Score score = new Score(player.Name);
             score.GetScore(this);
-            Console.WriteLine(score.ScoreAmount);
+            Console.WriteLine("Score " + score.ScoreAmount);
             Console.WriteLine("Game over");
         }
 
         //Aanmaken van kaarten op basis van hoeveelheid kaarten. Dit verdubbelen en randomizen.
-        //I wordt gebruik om een uniek Id te maken hierdoor kan de kaart niet twee keer gekozen worden.
+        //i wordt gebruik om een uniek Id te maken, hierdoor kan de kaart niet twee keer gekozen worden.
         //value wordt gebruikt om eenzelfde value te maken per paar. 
         public List<Card> GenerateCards(int cardamount)
         {
@@ -59,9 +59,12 @@ namespace Memory.Model.Classes
         //KLAAR, maar hoe console output testen?
         public void DisplayCards()
         {
+            Console.Clear();
             int i = 9;
+            Console.WriteLine($"Attempt number: {Attempts + 1}");
             foreach (Card card in Cards)
             {
+                
                 if (card.TurnedOver)
                 {
                     Console.WriteLine($" [X] Val= {card.CardValue}");
@@ -96,6 +99,7 @@ namespace Memory.Model.Classes
                 try
                 {
                     choice1 = Check(Console.ReadLine());
+                    Console.WriteLine($"Chosen card value was: {choice1.CardValue}");
                 }
                 catch (CardNotFoundException ex)
                 {
@@ -108,6 +112,7 @@ namespace Memory.Model.Classes
                 try
                 {
                     choice2 = Check(Console.ReadLine());
+                    Console.WriteLine($"Chosen card value was: {choice2.CardValue}");
                 }
                 catch (CardNotFoundException ex)
                 {
@@ -120,6 +125,8 @@ namespace Memory.Model.Classes
                     if (CompareCards(choice1, choice2))
                     {
                         validInput = true;
+                        Console.WriteLine("Press a key to go the next attempt.");
+                        Console.ReadKey();
                     }
                 }
             }
@@ -193,6 +200,7 @@ namespace Memory.Model.Classes
                 choice1.TurnedOver = true;
                 choice2.TurnedOver = true;
                 Console.WriteLine("Correct!");
+                Attempts++;
                 return true;
             }
             else if (choice1.Id == choice2.Id)
@@ -208,6 +216,7 @@ namespace Memory.Model.Classes
             else
             {
                 Console.WriteLine("Those are not the same cards! Try again. An attempt has been added.");
+                Attempts++;
                 return true;
             }
         }
