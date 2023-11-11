@@ -19,7 +19,7 @@ namespace Memory.Model.Classes
         public void StartGame(Player player)
         {
             GenerateCards(player.CardAmount);
-            ShuffleCards();
+            //ShuffleCards();
 
             while (CheckIfGameOver())
             {
@@ -27,20 +27,28 @@ namespace Memory.Model.Classes
                 ChooseCards();
             }
 
+            Console.Clear();
+            Console.WriteLine("Game over now, calculating score.");
             Score score = new Score(player.Name);
             score.GetScore(this);
-            Console.WriteLine("Score " + score.ScoreAmount);
+            score.SaveScore(score);
+            Console.WriteLine("Score " + score.ScoreAmount + "\n");
+
+            score.GetHighScores();
+
             Console.WriteLine("Game over");
         }
 
         //Aanmaken van kaarten op basis van hoeveelheid kaarten. Dit verdubbelen en randomizen.
         //i wordt gebruik om een uniek Id te maken, hierdoor kan de kaart niet twee keer gekozen worden.
         //value wordt gebruikt om eenzelfde value te maken per paar. 
-        public List<Card> GenerateCards(int cardamount)
+        public List<Card> GenerateCards(string cardamount)
         {
+            int parsedAmount = ParseStringToInt(cardamount);
+            
             int i = 0;
             int value = 0;
-            while (Cards.Count() < cardamount * 2)
+            while (Cards.Count() < parsedAmount * 2)
             {
                 if (i % 2 == 0)
                 {
@@ -78,6 +86,7 @@ namespace Memory.Model.Classes
         }
 
         //KLAAR, TODO: Testen
+        //Schud alle kaarten door elkaar heen.
         public void ShuffleCards()
         {
             var shuffledcards = Cards.OrderBy(a => rng.Next()).ToList();
@@ -101,9 +110,9 @@ namespace Memory.Model.Classes
                     choice1 = Check(Console.ReadLine());
                     Console.WriteLine($"Chosen card value was: {choice1.CardValue}");
                 }
-                catch (CardNotFoundException ex)
+                catch (CardNotFoundException e)
                 {
-                    Console.WriteLine($"Error: {ex.Message}");
+                    Console.WriteLine($"Error: {e.Message}");
                     continue; 
                 }
 
@@ -114,9 +123,9 @@ namespace Memory.Model.Classes
                     choice2 = Check(Console.ReadLine());
                     Console.WriteLine($"Chosen card value was: {choice2.CardValue}");
                 }
-                catch (CardNotFoundException ex)
+                catch (CardNotFoundException e)
                 {
-                    Console.WriteLine($"Error: {ex.Message}");
+                    Console.WriteLine($"Error: {e.Message}");
                     continue;
                 }
 
@@ -132,7 +141,8 @@ namespace Memory.Model.Classes
             }
         }
 
-
+        //Voert de functies uit die de kaart zoeken.
+        //Indien fout, exception.
         public Card Check(string input)
         {
             try
@@ -142,11 +152,12 @@ namespace Memory.Model.Classes
                 return card;
             } catch (CardNotFoundException e) 
             {
-                throw new CardNotFoundException($"{e}");
+                throw new CardNotFoundException($"{e.Message}");
             }
             
         }
 
+        //Functie om input van console.readline() of andere string inputs naar int te maken.
         public int ParseStringToInt(string numberAsString)
         {
             try
@@ -160,6 +171,7 @@ namespace Memory.Model.Classes
             }
         }
 
+        //Functie om de kaart uit de list te halen. 
         public Card GetCardFromCards(int number)
         {
             try
@@ -173,23 +185,7 @@ namespace Memory.Model.Classes
             }
         }
 
-        //Checked of alle kaarten omgedraaid zijn.
-        //KLAAR, TODO: Testen schrijven.
-        public bool CheckIfGameOver()
-        {
-            int turnedOverCards = Cards.Where(c => c.TurnedOver.Equals(true)).ToList().Count();
-
-            if (turnedOverCards == Cards.Count())
-            {
-                EndTime = DateTime.Now;
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
+        //Functie om gekozen kaarten te vergelijken qua value.
         public bool CompareCards(Card choice1, Card choice2)
         {
             if (choice1.CardValue == choice2.CardValue &&
@@ -217,6 +213,23 @@ namespace Memory.Model.Classes
             {
                 Console.WriteLine("Those are not the same cards! Try again. An attempt has been added.");
                 Attempts++;
+                return true;
+            }
+        }
+
+        //Checked na elke beurt of alle kaarten omgedraaid zijn.
+        //KLAAR, TODO: Testen schrijven.
+        public bool CheckIfGameOver()
+        {
+            int turnedOverCards = Cards.Where(c => c.TurnedOver.Equals(true)).ToList().Count();
+
+            if (turnedOverCards == Cards.Count())
+            {
+                EndTime = DateTime.Now;
+                return false;
+            }
+            else
+            {
                 return true;
             }
         }
