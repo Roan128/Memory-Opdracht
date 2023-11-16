@@ -37,7 +37,7 @@
             Height="75">
             Cards
         </TextBox>
-        <Button Name="StartBtn" Style="{DynamicResource ButtonTemplate}" Grid.Column="1" Grid.Row="3">
+        <Button Name="StartBtn" Style="{DynamicResource ButtonTemplate}" Grid.Column="1" Grid.Row="3" Click="StartBtn_Click">
             Save and start
         </Button>
     </Grid>

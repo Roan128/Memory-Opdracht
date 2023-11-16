@@ -7,4 +7,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Memory.Model\Memory.Model.csproj" />
+  </ItemGroup>
+
 </Project>

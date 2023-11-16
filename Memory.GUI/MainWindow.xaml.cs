@@ -12,6 +12,8 @@ public partial class MainWindow : Window
 
     private void StartBtn_Click(object sender, RoutedEventArgs e)
     {
-        GameCreationPage gamepage = new GameCreationPage();
+        GameCreationWindow gameCreationWindow = new GameCreationWindow();
+        gameCreationWindow.Show();
+        Close();
     }
 }
