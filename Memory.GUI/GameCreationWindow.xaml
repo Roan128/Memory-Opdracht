@@ -1,0 +1,44 @@
+﻿<Window x:Class="Memory.GUI.GameCreationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Memory.GUI"
+        mc:Ignorable="d"
+        Title="Memory game" Height="768" Width="1024">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox
+              Name="TextBoxName"
+              TextWrapping="Wrap"
+              AcceptsReturn="False" 
+              Grid.Row="1"
+              Grid.Column="1"
+              Height="75">
+            Name
+        </TextBox>
+        <TextBox
+            Name="TextBoxCards"
+            TextWrapping="Wrap"
+            AcceptsReturn="False" 
+            Grid.Row="2"
+            Grid.Column="1"
+            Height="75">
+            Cards
+        </TextBox>
+        <Button Name="StartBtn" Style="{DynamicResource ButtonTemplate}" Grid.Column="1" Grid.Row="3">
+            Save and start
+        </Button>
+    </Grid>
+</Window>

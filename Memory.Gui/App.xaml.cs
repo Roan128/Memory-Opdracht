@@ -1,12 +1,10 @@
-﻿namespace Memory.GUI
-{
-    public partial class App : Application
-    {
-        public App()
-        {
-            InitializeComponent();
+﻿using System.Windows;
 
-            MainPage = new AppShell();
-        }
-    }
+namespace Memory.GUI;
+
+/// <summary>
+/// Interaction logic for App.xaml
+/// </summary>
+public partial class App : Application
+{
 }
