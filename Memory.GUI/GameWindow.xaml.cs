@@ -1,6 +1,7 @@
 ﻿using Memory.Model.Classes;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Memory.GUI
 {
@@ -32,6 +33,18 @@ namespace Memory.GUI
         private void GuessBtn_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is Card clickedCard)
+            {
+                if (!clickedCard.TurnedOver)
+                {
+                    // Set the display text for the clicked card
+                    clickedCard.DisplayText = clickedCard.CardValue.ToString();
+                }
+            }
         }
     }
 }

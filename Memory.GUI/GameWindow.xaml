@@ -13,6 +13,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="200"></RowDefinition>
         </Grid.RowDefinitions>
         <ItemsControl
@@ -28,25 +30,31 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border
-                            Width="100"
-                            Height="100"
-                            Margin="5"
-                            Padding="10"
-                            BorderBrush="Black"
-                            BorderThickness="1">
+                    <!-- Use Button instead of Border -->
+                    <Button
+                        Width="100"
+                        Height="100"
+                        Margin="5"
+                        Padding="10"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Command="{Binding ClickCommand}"
+                        CommandParameter="{Binding}"
+                        Click="Button_Click">
                         <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontWeight="Bold"
-                                Text="{Binding CardValue}" />
-                    </Border>
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontWeight="Bold"
+                            Text="{Binding DisplayText}"
+                            >
+                        </TextBlock>
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-
-        <Button Name="GuessBtn" Style="{DynamicResource ButtonTemplate}" Grid.Column="1" Grid.Row="1" Click="GuessBtn_Click">
+        <Button Name="GuessBtn" Style="{DynamicResource ButtonTemplate}" Grid.Column="1" Grid.Row="3" Click="GuessBtn_Click">
             Guess!
         </Button>
+        <Label Name="TextLabel1" Height="40" Width="300" Grid.Column="1" Margin="21,10,21,150" Grid.Row="3"/>
     </Grid>
 </Window>

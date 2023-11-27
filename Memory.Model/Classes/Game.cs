@@ -17,7 +17,7 @@ public class Game
     public void StartGame(Player player)
     {
         GenerateCards(player.CardAmount);
-        //ShuffleCards();
+        ShuffleCards();
 
         while (CheckIfGameOver())
         {
@@ -62,7 +62,6 @@ public class Game
 
 
     //Kaarten printen met list positie erbij.
-    //KLAAR, maar hoe console output testen?
     public void DisplayCards()
     {
         Console.Clear();
@@ -83,7 +82,6 @@ public class Game
         }
     }
 
-    //KLAAR, TODO: Testen
     //Schud alle kaarten door elkaar heen.
     public void ShuffleCards()
     {
@@ -93,8 +91,6 @@ public class Game
 
     //Functie om een kaart te kiezen.
     //Deze functie moet eigenlijk alleen voor de console versie gebruikt worden.
-    //Bij GUI Direct naar comparecards gaan.
-    //TODO: Refactoren, simpeler en testbaarder maken.
     public void ChooseCards()
     {
         bool validInput = false;
@@ -217,7 +213,6 @@ public class Game
     }
 
     //Checked na elke beurt of alle kaarten omgedraaid zijn.
-    //KLAAR, TODO: Testen schrijven.
     public bool CheckIfGameOver()
     {
         int turnedOverCards = Cards.Where(c => c.TurnedOver.Equals(true)).ToList().Count();
