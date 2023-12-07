@@ -37,15 +37,21 @@
                         Padding="10"
                         BorderBrush="Black"
                         BorderThickness="1"
-                        Command="{Binding ClickCommand}"
                         Click="Button_Click"
-                        Content="{Binding Id}">
+                        >
+                        <Run Text="{Binding Id, StringFormat='Id: {0}'}"></Run>
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <Button Name="GuessBtn" Style="{DynamicResource ButtonTemplate}" Grid.Column="1" Grid.Row="3" Click="GuessBtn_Click" Visibility="Hidden">
             Guess!
+        </Button>
+        <Button Name="ContinueBtn" Style="{DynamicResource ButtonTemplate}" Grid.Column="1" Grid.Row="3" Click="ContinueBtn_Click" Visibility="Hidden">
+            Continue
+        </Button>
+        <Button Name="FinishBtn" Style="{DynamicResource ButtonTemplate}" Grid.Column="1" Grid.Row="3" Click="FinishBtn_Click" Visibility="Hidden">
+            Finish
         </Button>
         <Label Name="AttemptsLabel" Grid.Row="2" FontSize="20" FontFamily="Assets/Fonts/#Heebo" FontWeight="Medium" /> 
     </Grid>

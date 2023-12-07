@@ -32,7 +32,7 @@ public class Game
         score.SaveScore(score);
         Console.WriteLine("Score " + score.ScoreAmount + "\n");
 
-        score.GetHighScores();
+        score.GetHighScores(true);
 
         Console.WriteLine("Game over");
     }

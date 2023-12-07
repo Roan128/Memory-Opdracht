@@ -1,15 +1,10 @@
 ﻿using Memory.Model.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Memory.Model.Classes
 {
     public class Score
     {
-        public Guid Id { get; set; } 
+        public Guid Id { get; set; }
 
         public int ScoreAmount { get; set; }
 
@@ -21,8 +16,8 @@ namespace Memory.Model.Classes
 
         public Score(string name)
         {
-           Id = Guid.NewGuid();
-           PlayerName = name;
+            Id = Guid.NewGuid();
+            PlayerName = name;
         }
 
         //Double gebruiken tijdens het rekenen. Daarna casten naar int voor result
@@ -37,7 +32,7 @@ namespace Memory.Model.Classes
             double scorepart1 = time * game.Attempts;
             double scorepart2 = squareofcards / scorepart1;
             double finalscore = scorepart2 * 1000.0;
-            
+
             //Score setten
             ScoreAmount = (int)finalscore;
         }
@@ -52,10 +47,18 @@ namespace Memory.Model.Classes
             scorerepository.Insert(score);
         }
 
-        public void GetHighScores()
+        public List<Score> GetHighScores(bool isConsole)
         {
             List<Score> scorelist = scorerepository.GetAll().OrderByDescending(c => c.ScoreAmount).Take(10).ToList();
-            DisplayHighScore(scorelist);
+            if (isConsole)
+            {
+                DisplayHighScore(scorelist);
+                return null;
+            }
+            else
+            {
+                return scorelist;
+            }
         }
 
         public void DisplayHighScore(List<Score> scores)
