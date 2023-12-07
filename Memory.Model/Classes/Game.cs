@@ -135,6 +135,18 @@ public class Game
         }
     }
 
+    public bool Compare(Card card1, Card card2)
+    {
+        if (card1.CardValue.Equals(card2.CardValue))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     //Voert de functies uit die de kaart zoeken.
     //Indien fout, exception.
     public Card Check(string input)

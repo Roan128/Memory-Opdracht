@@ -8,8 +8,6 @@
 
         public bool TurnedOver { get; set; } = false;
 
-        public string DisplayText { get; set; } = string.Empty;
-
         public Card(int id)
         {
             Id = id;
