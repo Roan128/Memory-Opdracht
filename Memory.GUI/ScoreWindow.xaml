@@ -8,9 +8,9 @@
         Title="Memory game" Height="768" Width="1024">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
@@ -20,6 +20,23 @@
         <Label FontSize="22" FontWeight="Bold">
             Top 10 scores:
         </Label>
+        <Label FontSize="22" FontWeight="Bold" Grid.Column="1" HorizontalAlignment="Center">
+            Jouw Score:
+        </Label>
+        <Label Name="ScoreAsk" FontSize="22" FontWeight="Bold" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            Wil je deze score opslaan?
+        </Label>
+        <Button Name="JaButton" Grid.Row="2" Grid.Column="1" Style="{DynamicResource ButtonTemplate}" Margin="30" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left" Click="JaButton_Click">
+            Ja
+        </Button>
+        <Button Name="NeeButton" Grid.Row="2" Grid.Column="1" Style="{DynamicResource ButtonTemplate}" Margin="30" VerticalAlignment="Top" Width="100" HorizontalAlignment="Right" Click="NeeButton_Click">
+            Nee
+        </Button>
+        <Button Name="CloseButton" Grid.Row="2" Grid.Column="1" Style="{DynamicResource ButtonTemplate}" Margin="30" VerticalAlignment="Center" HorizontalAlignment="Center" Click="CloseButton_Click" Visibility="Hidden">
+            Afsluiten
+        </Button>
+        <Label Name="ScoreLabel" FontSize="22" FontWeight="Bold" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center"/>
+        
         <ListBox Grid.Row="1" Name="ScoreLists" BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>

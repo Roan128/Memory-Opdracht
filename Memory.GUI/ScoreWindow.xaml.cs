@@ -1,5 +1,4 @@
 ﻿using Memory.Model.Classes;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace Memory.GUI
@@ -15,8 +14,6 @@ namespace Memory.GUI
 
         public Score Score { get; set; }
 
-        public List<Score> TopScores { get; set; } = new List<Score>();
-
         public ScoreWindow(Game game, Player player)
         {
 
@@ -27,9 +24,33 @@ namespace Memory.GUI
 
             Score = new Score(player.Name);
             Score.GetScore(game);
-            TopScores = Score.GetHighScores(false);
+            ScoreLabel.Content = Score.ScoreAmount;
             DataContext = this;
-            ScoreLists.ItemsSource = TopScores;
+            ScoreLists.ItemsSource = Score.GetHighScores(false);
+        }
+
+        private void JaButton_Click(object sender, RoutedEventArgs e)
+        {
+            JaButton.IsEnabled = false;
+            Score.SaveScore(Score);
+            ScoreLists.ItemsSource = Score.GetHighScores(false);
+            NeeButton.Visibility = Visibility.Collapsed;
+            JaButton.Visibility = Visibility.Collapsed;
+            ScoreAsk.Visibility = Visibility.Collapsed;
+            CloseButton.Visibility = Visibility.Visible;
+        }
+
+        private void NeeButton_Click(object sender, RoutedEventArgs e)
+        {
+            NeeButton.Visibility = Visibility.Collapsed;
+            JaButton.Visibility = Visibility.Collapsed;
+            ScoreAsk.Visibility = Visibility.Collapsed;
+            CloseButton.Visibility = Visibility.Visible;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

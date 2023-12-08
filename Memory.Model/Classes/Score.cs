@@ -37,11 +37,6 @@ namespace Memory.Model.Classes
             ScoreAmount = (int)finalscore;
         }
 
-        public void CheckIfHighScore()
-        {
-
-        }
-
         public void SaveScore(Score score)
         {
             scorerepository.Insert(score);
