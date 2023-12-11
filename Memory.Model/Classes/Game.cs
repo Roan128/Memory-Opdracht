@@ -25,16 +25,17 @@ public class Game
             ChooseCards();
         }
 
-        CalculateScore(player);
+        CalculateScore(player, this);
         Console.WriteLine("Game over");
     }
 
-    public void CalculateScore(Player player)
+    //Console only
+    private void CalculateScore(Player player, Game game)
     {
         Console.Clear();
         Console.WriteLine("Game over now, calculating score.");
         Score score = new Score(player.Name);
-        score.GetScore(this);
+        score.GetScore(game);
         score.SaveScore(score);
         Console.WriteLine("Score " + score.ScoreAmount + "\n");
         score.GetHighScores(true);
@@ -43,6 +44,7 @@ public class Game
     //Aanmaken van kaarten op basis van hoeveelheid kaarten. Dit verdubbelen en randomizen.
     //i wordt gebruik om een uniek Id te maken, hierdoor kan de kaart niet twee keer gekozen worden.
     //value wordt gebruikt om eenzelfde value te maken per paar. 
+    //Teststatus: DONE
     public List<Card> GenerateCards(string cardamount)
     {
         int parsedAmount = int.Parse(cardamount);
@@ -64,8 +66,8 @@ public class Game
     }
 
 
-    //Kaarten printen met list positie erbij.
-    public void DisplayCards()
+    //Kaarten printen met list positie (+ 1) erbij.
+    private void DisplayCards()
     {
         Console.Clear();
         int i = 9;
@@ -86,6 +88,7 @@ public class Game
     }
 
     //Schud alle kaarten door elkaar heen.
+    //Teststatus: DONE
     public void ShuffleCards()
     {
         var shuffledcards = Cards.OrderBy(a => rng.Next()).ToList();
@@ -94,7 +97,7 @@ public class Game
 
     //Functie om een kaart te kiezen.
     //Functie is alleen voor de console version.
-    public void ChooseCards()
+    private void ChooseCards()
     {
         bool validInput = false;
 
@@ -136,6 +139,7 @@ public class Game
     }
 
     //Functie om de kaart uit de list te halen. 
+    //Teststatus: DONE
     public Card GetCardFromCards(string number)
     {
         try
@@ -143,14 +147,14 @@ public class Game
             Card card = Cards[int.Parse(number) - 1];
             return card;
         }
-        catch (Exception)
+        catch (Exception) //Uit parse kunnen meerdere exceptions ontstaan, daarom checken op algemene exception.
         {
             throw new CardNotFoundException("The card could not be found.");
         }
     }
 
     //Functie om gekozen kaarten te vergelijken qua value.
-    public bool CompareCards(Card choice1, Card choice2)
+    protected bool CompareCards(Card choice1, Card choice2)
     {
         if (choice1.CardValue == choice2.CardValue &&
            choice1.Id != choice2.Id &&
@@ -182,6 +186,7 @@ public class Game
     }
 
     //Checked na elke beurt of alle kaarten omgedraaid zijn.
+    //Teststatus: DONE
     public bool CheckIfGameOver()
     {
         int turnedOverCards = Cards.Where(c => c.TurnedOver.Equals(true)).ToList().Count();

@@ -35,8 +35,24 @@ public partial class GameCreationWindow : Window
         }
     }
 
+    //Teststatus: 
     private bool IsValidNumber(string input)
     {
-        return int.TryParse(input, out _);
+        if (int.TryParse(input, out _))
+        {
+            if (int.Parse(input) <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }
