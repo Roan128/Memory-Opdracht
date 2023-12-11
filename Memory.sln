@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memory.ConsoleApp", "Memory
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memory.Test", "Memory.Test\Memory.Test.csproj", "{41AB763F-0D0B-49C9-AA7E-7FEA896C9BF8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memory.Model", "Memory.Model\Memory.Model.csproj", "{0E065951-72C4-4138-9DBB-A8D014172D29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memory.BLL", "Memory.Model\Memory.BLL.csproj", "{0E065951-72C4-4138-9DBB-A8D014172D29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memory.GUI", "Memory.GUI\Memory.GUI.csproj", "{0D62F80C-0F3A-4B38-A767-75329F023BF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memory.GUI", "Memory.GUI\Memory.GUI.csproj", "{0D62F80C-0F3A-4B38-A767-75329F023BF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memory.DAL", "Memory.DAL\Memory.DAL.csproj", "{7DACBBFD-F709-4C64-89CE-C0C691186E18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0D62F80C-0F3A-4B38-A767-75329F023BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D62F80C-0F3A-4B38-A767-75329F023BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D62F80C-0F3A-4B38-A767-75329F023BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DACBBFD-F709-4C64-89CE-C0C691186E18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DACBBFD-F709-4C64-89CE-C0C691186E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DACBBFD-F709-4C64-89CE-C0C691186E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DACBBFD-F709-4C64-89CE-C0C691186E18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

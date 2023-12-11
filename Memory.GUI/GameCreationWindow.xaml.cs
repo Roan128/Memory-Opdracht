@@ -1,4 +1,4 @@
-﻿using Memory.Model.Classes;
+﻿using Memory.Model.BusinessObjects;
 using System.Windows;
 
 namespace Memory.GUI;

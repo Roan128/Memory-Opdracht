@@ -1,6 +1,6 @@
 ﻿using Memory.Model.Exceptions;
 
-namespace Memory.Model.Classes;
+namespace Memory.Model.BusinessObjects;
 
 public class Game
 {
@@ -14,37 +14,23 @@ public class Game
     private static Random rng = new Random();
 
     //Functie om een game te starten. Wordt alleen in console gebruikt.
-    public void PlayGame(Player player)
+    public bool PlayGame()
     {
-        GenerateCards(player.CardAmount);
-        ShuffleCards();
-
         while (CheckIfGameOver())
         {
             DisplayCards();
             ChooseCards();
+            return false;
         }
 
-        CalculateScore(player, this);
-        Console.WriteLine("Game over");
+        return true;
     }
 
-    //Console only
-    private void CalculateScore(Player player, Game game)
-    {
-        Console.Clear();
-        Console.WriteLine("Game over now, calculating score.");
-        Score score = new Score(player.Name);
-        score.GetScore(game);
-        score.SaveScore(score);
-        Console.WriteLine("Score " + score.ScoreAmount + "\n");
-        score.GetHighScores(true);
-    }
+
 
     //Aanmaken van kaarten op basis van hoeveelheid kaarten. Dit verdubbelen en randomizen.
     //i wordt gebruik om een uniek Id te maken, hierdoor kan de kaart niet twee keer gekozen worden.
     //value wordt gebruikt om eenzelfde value te maken per paar. 
-    //Teststatus: DONE
     public List<Card> GenerateCards(string cardamount)
     {
         int parsedAmount = int.Parse(cardamount);
@@ -88,7 +74,6 @@ public class Game
     }
 
     //Schud alle kaarten door elkaar heen.
-    //Teststatus: DONE
     public void ShuffleCards()
     {
         var shuffledcards = Cards.OrderBy(a => rng.Next()).ToList();
@@ -139,7 +124,6 @@ public class Game
     }
 
     //Functie om de kaart uit de list te halen. 
-    //Teststatus: DONE
     public Card GetCardFromCards(string number)
     {
         try
@@ -186,7 +170,6 @@ public class Game
     }
 
     //Checked na elke beurt of alle kaarten omgedraaid zijn.
-    //Teststatus: DONE
     public bool CheckIfGameOver()
     {
         int turnedOverCards = Cards.Where(c => c.TurnedOver.Equals(true)).ToList().Count();

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Memory.Model\Memory.Model.csproj" />
+    <ProjectReference Include="..\Memory.Model\Memory.BLL.csproj" />
   </ItemGroup>
 
 </Project>

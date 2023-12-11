@@ -1,4 +1,5 @@
-﻿using Memory.Model.Classes;
+﻿using Memory.DAL.Services;
+using Memory.Model.BusinessObjects;
 using System.Windows;
 
 namespace Memory.GUI
@@ -14,6 +15,8 @@ namespace Memory.GUI
 
         public Score Score { get; set; }
 
+        public ScoreService Scoreservice { get; set; }
+
         public ScoreWindow(Game game, Player player)
         {
 
@@ -21,19 +24,19 @@ namespace Memory.GUI
             Player = player;
 
             InitializeComponent();
-
+            Scoreservice = new ScoreService();
             Score = new Score(player.Name);
-            Score.GetScore(game);
+            Score.CalculateScore(game);
             ScoreLabel.Content = Score.ScoreAmount;
             DataContext = this;
-            ScoreLists.ItemsSource = Score.GetHighScores(false);
+            ScoreLists.ItemsSource = Scoreservice.GetHighScores();
         }
 
         private void JaButton_Click(object sender, RoutedEventArgs e)
         {
+            Scoreservice.SaveScore(Score);
             JaButton.IsEnabled = false;
-            Score.SaveScore(Score);
-            ScoreLists.ItemsSource = Score.GetHighScores(false);
+            ScoreLists.ItemsSource = Scoreservice.GetHighScores();
             NeeButton.Visibility = Visibility.Collapsed;
             JaButton.Visibility = Visibility.Collapsed;
             ScoreAsk.Visibility = Visibility.Collapsed;

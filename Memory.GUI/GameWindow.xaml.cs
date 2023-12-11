@@ -1,4 +1,4 @@
-﻿using Memory.Model.Classes;
+﻿using Memory.Model.BusinessObjects;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
