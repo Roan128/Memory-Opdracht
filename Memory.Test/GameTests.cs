@@ -1,7 +1,6 @@
 
 
 using Memory.Model.Classes;
-using Memory.Model.Exceptions;
 
 namespace Memory.Test
 {
@@ -39,33 +38,6 @@ namespace Memory.Test
             //Assert
             Assert.Throws();
         }*/
-
-        //Tests for Check()
-        [Test]
-        public void Test_Check_ShouldReturn()
-        {
-            //Setup
-            _testGame.GenerateCards("1");
-            Card card = _testGame.Cards[0];
-
-            //Simulate input
-            Card card2 = _testGame.Check("1");
-
-            //Assert
-            Assert.That(card, Is.EqualTo(card2));
-        }
-
-        [TestCase("1000")]
-        [TestCase("text")]
-        public void Test_Check_ShouldGiveException(string input)
-        {
-            //Setup
-            _testGame.GenerateCards("1");
-            Card card = _testGame.Cards[0];
-
-            //Assert
-            Assert.Throws<CardNotFoundException>(() => _testGame.Check(input));
-        }
 
         //Tests for CheckIfGameOver()
         [Test]

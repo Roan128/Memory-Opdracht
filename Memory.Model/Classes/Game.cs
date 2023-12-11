@@ -2,19 +2,19 @@
 
 namespace Memory.Model.Classes;
 
-//Deze klasse misschien opdelen in twee klasses. Een met logica voor de console en een met logica voor de GUI.
 public class Game
 {
-    public DateTime StartTime { get; set; } = DateTime.Now;
+    public DateTime StartTime { get; set; } = DateTime.UtcNow;
     public DateTime EndTime { get; set; }
 
-    public List<Card> Cards = new List<Card> { };
+    public List<Card> Cards = new List<Card>();
+
     public int Attempts { get; set; }
 
     private static Random rng = new Random();
 
-    //Game starten zodra player aangemaakt is en kaarten gemaakt zijn.
-    public void StartGame(Player player)
+    //Functie om een game te starten. Wordt alleen in console gebruikt.
+    public void PlayGame(Player player)
     {
         GenerateCards(player.CardAmount);
         ShuffleCards();
@@ -25,16 +25,19 @@ public class Game
             ChooseCards();
         }
 
+        CalculateScore(player);
+        Console.WriteLine("Game over");
+    }
+
+    public void CalculateScore(Player player)
+    {
         Console.Clear();
         Console.WriteLine("Game over now, calculating score.");
         Score score = new Score(player.Name);
         score.GetScore(this);
         score.SaveScore(score);
         Console.WriteLine("Score " + score.ScoreAmount + "\n");
-
         score.GetHighScores(true);
-
-        Console.WriteLine("Game over");
     }
 
     //Aanmaken van kaarten op basis van hoeveelheid kaarten. Dit verdubbelen en randomizen.
@@ -42,7 +45,7 @@ public class Game
     //value wordt gebruikt om eenzelfde value te maken per paar. 
     public List<Card> GenerateCards(string cardamount)
     {
-        int parsedAmount = ParseStringToInt(cardamount);
+        int parsedAmount = int.Parse(cardamount);
 
         int i = 0;
         int value = 0;
@@ -90,7 +93,7 @@ public class Game
     }
 
     //Functie om een kaart te kiezen.
-    //Deze functie moet eigenlijk alleen voor de console versie gebruikt worden.
+    //Functie is alleen voor de console version.
     public void ChooseCards()
     {
         bool validInput = false;
@@ -101,7 +104,7 @@ public class Game
             Card choice1 = null;
             try
             {
-                choice1 = Check(Console.ReadLine());
+                choice1 = GetCardFromCards(Console.ReadLine());
                 Console.WriteLine($"Chosen card value was: {choice1.CardValue}");
             }
             catch (CardNotFoundException e)
@@ -114,7 +117,7 @@ public class Game
             Card choice2 = null;
             try
             {
-                choice2 = Check(Console.ReadLine());
+                choice2 = GetCardFromCards(Console.ReadLine());
                 Console.WriteLine($"Chosen card value was: {choice2.CardValue}");
             }
             catch (CardNotFoundException e)
@@ -123,67 +126,21 @@ public class Game
                 continue;
             }
 
-            if (choice1 != null && choice2 != null)
+            if (CompareCards(choice1, choice2))
             {
-                if (CompareCards(choice1, choice2))
-                {
-                    validInput = true;
-                    Console.WriteLine("Press a key to go the next attempt.");
-                    Console.ReadKey();
-                }
+                validInput = true;
+                Console.WriteLine("Press a key to go the next attempt.");
+                Console.ReadKey();
             }
         }
     }
 
-    public bool Compare(Card card1, Card card2)
-    {
-        if (card1.CardValue.Equals(card2.CardValue))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    //Voert de functies uit die de kaart zoeken.
-    //Indien fout, exception.
-    public Card Check(string input)
-    {
-        try
-        {
-            int parsed = ParseStringToInt(input);
-            Card card = GetCardFromCards(parsed);
-            return card;
-        }
-        catch (CardNotFoundException e)
-        {
-            throw new CardNotFoundException($"{e.Message}");
-        }
-
-    }
-
-    //Functie om input van console.readline() of andere string inputs naar int te maken.
-    public int ParseStringToInt(string numberAsString)
-    {
-        try
-        {
-            int number = int.Parse(numberAsString);
-            return number;
-        }
-        catch
-        {
-            throw new CardNotFoundException("Number is not valid.");
-        }
-    }
-
     //Functie om de kaart uit de list te halen. 
-    public Card GetCardFromCards(int number)
+    public Card GetCardFromCards(string number)
     {
         try
         {
-            Card card = Cards[number - 1];
+            Card card = Cards[int.Parse(number) - 1];
             return card;
         }
         catch (Exception)

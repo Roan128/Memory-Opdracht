@@ -55,8 +55,8 @@ namespace Memory.GUI
                 }
             }
 
-            //Met een methode van Game de kaarten vergelijken.
-            if (Game.Compare(cards[0], cards[1]))
+            //Card value met elkaar vergelijken.
+            if (cards[0].CardValue.Equals(cards[1].CardValue))
             {
                 //Met linq de kaarten op turnedover zetten als ze hetzelfde zijn. Spel gaat meteen door
                 Game.Cards

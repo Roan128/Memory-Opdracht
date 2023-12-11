@@ -7,6 +7,6 @@ Player player = new Player(name);
 
 Game game = new Game();
 
-game.StartGame(player);
+game.PlayGame(player);
 
 
