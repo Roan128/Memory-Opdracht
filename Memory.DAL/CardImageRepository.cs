@@ -17,7 +17,7 @@ namespace Memory.DAL
         {
             foreach (var cardImage in cardImages)
             {
-                string sqlQuery = "INSERT INTO CardImages (Id, SetId, ImageData) VALUES (@Id, @SetId, @ImageData);";
+                string sqlQuery = "INSERT INTO Image (Id, SetId, ImageData) VALUES (@Id, @SetId, @ImageData);";
 
                 using (var connection = new SqlConnection(Connectionstring))
                 {
@@ -71,7 +71,7 @@ namespace Memory.DAL
             return cardImages;
         }
 
-        public List<CardImage> GetCardsBySetId(Guid setId)
+        public List<CardImage> GetImagesBySetId(Guid setId)
         {
             throw new NotImplementedException();
         }

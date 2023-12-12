@@ -20,7 +20,7 @@
             Name:
         </Label>
         <TextBox
-            Name="TextBoxCards"
+            Name="NameTextBox"
             TextWrapping="Wrap"
             AcceptsReturn="False" 
             Grid.Row="0"

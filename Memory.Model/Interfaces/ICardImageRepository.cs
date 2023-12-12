@@ -6,5 +6,5 @@ public interface ICardImageRepository : IRepository<CardImage>
 {
     public bool CreateMultiple(List<CardImage> values);
 
-    public List<CardImage> GetCardsBySetId(Guid setId);
+    public List<CardImage> GetImagesBySetId(Guid setId);
 }

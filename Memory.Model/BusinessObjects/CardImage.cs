@@ -1,11 +1,18 @@
-﻿namespace Memory.BLL.BusinessObjects
+﻿namespace Memory.BLL.BusinessObjects;
+
+public class CardImage
 {
-    public class CardImage
+    public Guid Id { get; set; }
+
+    public Guid SetId { get; set; }
+
+    public byte[]? ImageData { get; set; }
+
+    public CardImage() { }
+
+    public CardImage(byte[] imageData)
     {
-        public Guid Id { get; set; }
-
-        public Guid SetId { get; set; }
-
-        public byte[] ImageData { get; set; }
+        ImageData = imageData;
+        Id = Guid.NewGuid();
     }
 }

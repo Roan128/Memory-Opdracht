@@ -15,17 +15,16 @@ public partial class GameCreationWindow : Window
 
     private void StartBtn_Click(object sender, RoutedEventArgs e)
     {
-        string playername = TextBoxName.Text;
-
-        if (!IsValidNumber(TextBoxCards.Text))
+        if (!IsValidNumber(TextBoxCards.Text) || TextBoxName.Text.Equals("") || TextBoxName.Text.Equals(null))
         {
             // Display an error message or take appropriate action
-            MessageBox.Show("Invalid number entered. Please enter a valid number.");
+            MessageBox.Show("Invalid number or name entered. Please enter a valid number or name.");
             // Optionally, clear the TextBox or set a default value
             TextBoxCards.Text = "";
         }
         else
         {
+            string playername = TextBoxName.Text;
             string cardamount = TextBoxCards.Text;
             Player player = new Player(playername, cardamount);
             Game game = new Game();
@@ -54,5 +53,11 @@ public partial class GameCreationWindow : Window
             return false;
         }
 
+    }
+
+    private void CreateSetBtn_Click(object sender, RoutedEventArgs e)
+    {
+        SetCreationPopup popup = new SetCreationPopup();
+        popup.Show();
     }
 }

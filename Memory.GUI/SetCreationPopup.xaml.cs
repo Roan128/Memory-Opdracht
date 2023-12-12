@@ -1,4 +1,8 @@
-﻿using Memory.DAL.Services;
+﻿using Memory.BLL.BusinessObjects;
+using Memory.DAL.Services;
+using Microsoft.Win32;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 
 namespace Memory.GUI
@@ -12,6 +16,8 @@ namespace Memory.GUI
 
         public ImageSetService SetService { get; set; } = new ImageSetService();
 
+        public List<CardImage> CardImages { get; set; } = new List<CardImage> { };
+
         public SetCreationPopup()
         {
             InitializeComponent();
@@ -19,13 +25,36 @@ namespace Memory.GUI
 
         private void SetCreateBtn_Click(object sender, RoutedEventArgs e)
         {
-            ImageService.UploadImages();
-            SetService.
+            ImageSet set = new ImageSet(NameTextBox.Text);
+            CardImages.ForEach(c => c.SetId = set.Id);
+            SetService.UploadSet(set);
+            ImageService.UploadImages(CardImages);
+
+            Close();
         }
 
         private void PickImagesBtn_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image Files (*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All files (*.*)|*.*",
+                Title = "Select Image",
+                Multiselect = true // Allow selecting multiple images
+            };
 
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // Handle the selected image files
+                string[] selectedFiles = openFileDialog.FileNames;
+
+                // Process the selected files (e.g., upload or save them)
+                foreach (string filePath in selectedFiles)
+                {
+                    byte[] imageData = File.ReadAllBytes(filePath);
+                    CardImage image = new CardImage(imageData);
+                    CardImages.Add(image);
+                }
+            }
         }
     }
 }
