@@ -1,4 +1,5 @@
-﻿using Memory.Model.BusinessObjects;
+﻿using Memory.BLL.BusinessObjects;
+using Memory.Model.BusinessObjects;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -17,7 +18,7 @@ namespace Memory.GUI
 
         public List<Button> Selected { get; set; } = new List<Button>();
 
-        //Stap 1: opzetten game window
+        //Stap 1: opzetten game window zonder set
         public GameWindow(Game game, Player player)
         {
             InitializeComponent();
@@ -36,6 +37,19 @@ namespace Memory.GUI
 
             //Attempts tonen
             UpdateAttemptsLabel();
+        }
+
+        //Stap 1: opzetten game window met set
+        public GameWindow(Game game, Player player, ImageSet set)
+        {
+            InitializeComponent();
+            DataContext = this;
+
+            this.Game = game;
+            this.Player = player;
+
+            game.GenerateCards();
+            game.ShuffleCards();
         }
 
         //Gokken of kaarten gelijk zijn.
