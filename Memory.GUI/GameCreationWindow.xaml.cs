@@ -1,4 +1,6 @@
-﻿using Memory.Model.BusinessObjects;
+﻿using Memory.DAL.Services;
+using Memory.Model.BusinessObjects;
+using System;
 using System.Windows;
 
 namespace Memory.GUI;
@@ -8,9 +10,13 @@ namespace Memory.GUI;
 /// </summary>
 public partial class GameCreationWindow : Window
 {
+    private ImageSetService imageSetService { get; set; }
+
     public GameCreationWindow()
     {
+        imageSetService = new ImageSetService();
         InitializeComponent();
+        DisplayedSets.ItemsSource = imageSetService.GetImageSets();
     }
 
     private void StartBtn_Click(object sender, RoutedEventArgs e)
@@ -58,6 +64,17 @@ public partial class GameCreationWindow : Window
     private void CreateSetBtn_Click(object sender, RoutedEventArgs e)
     {
         SetCreationPopup popup = new SetCreationPopup();
+        popup.onClose += HandleCustomEvent;
         popup.Show();
+    }
+
+    private void HandleCustomEvent(object? sender, EventArgs e)
+    {
+        DisplayedSets.ItemsSource = imageSetService.GetImageSets();
+    }
+
+    private void SetSelect_Click(object sender, RoutedEventArgs e)
+    {
+        TextBoxCards.IsEnabled = false;
     }
 }

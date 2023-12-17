@@ -10,5 +10,12 @@ namespace Memory.DAL.Services
         {
             imageSetRepository.Create(set);
         }
+
+        public List<ImageSet> GetImageSets()
+        {
+            List<ImageSet> sets = new List<ImageSet>();
+            sets = (List<ImageSet>)imageSetRepository.GetAll();
+            return sets;
+        }
     }
 }

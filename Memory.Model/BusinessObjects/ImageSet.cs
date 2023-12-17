@@ -11,5 +11,9 @@
             Name = name;
             Id = Guid.NewGuid();
         }
+
+        public ImageSet()
+        {
+        }
     }
 }

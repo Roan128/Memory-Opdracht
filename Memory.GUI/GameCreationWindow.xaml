@@ -73,8 +73,8 @@
                         Padding="10"
                         BorderBrush="Black"
                         BorderThickness="1"
-                        Click="Button_Click">
-                        
+                        Click="SetSelect_Click"
+                        Content="{Binding Name}">
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

@@ -1,6 +1,7 @@
 ﻿using Memory.BLL.BusinessObjects;
 using Memory.DAL.Services;
 using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -18,6 +19,8 @@ namespace Memory.GUI
 
         public List<CardImage> CardImages { get; set; } = new List<CardImage> { };
 
+        public event EventHandler onClose;
+
         public SetCreationPopup()
         {
             InitializeComponent();
@@ -30,6 +33,7 @@ namespace Memory.GUI
             SetService.UploadSet(set);
             ImageService.UploadImages(CardImages);
 
+            onClose.Invoke(this, EventArgs.Empty);
             Close();
         }
 

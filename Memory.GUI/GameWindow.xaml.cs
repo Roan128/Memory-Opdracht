@@ -130,5 +130,7 @@ namespace Memory.GUI
             scoreWindow.Show();
             Close();
         }
+
+
     }
 }

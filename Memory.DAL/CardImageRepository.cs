@@ -39,7 +39,7 @@ namespace Memory.DAL
         public ICollection<CardImage> GetAll()
         {
             var cardImages = new List<CardImage>();
-            string sql = "SELECT Id, ScoreAmount, PlayerName FROM Score;";
+            string sql = "SELECT Id, SetId, ImageData FROM Image;";
 
             using (var connection = new SqlConnection(Connectionstring))
             {
@@ -73,7 +73,37 @@ namespace Memory.DAL
 
         public List<CardImage> GetImagesBySetId(Guid setId)
         {
-            throw new NotImplementedException();
+            var cardImages = new List<CardImage>();
+            string sql = $"SELECT Id, SetId, ImageData FROM Image WHERE SetId = '{setId}'";
+
+            using (var connection = new SqlConnection(Connectionstring))
+            {
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var item = new CardImage();
+                        item.Id = reader.GetGuid(0);
+                        item.SetId = reader.GetGuid(1);
+                        int columnIndex = reader.GetOrdinal("ImageData");
+
+                        if (!reader.IsDBNull(columnIndex))
+                        {
+                            long length = reader.GetBytes(columnIndex, 0, null, 0, 0);
+                            byte[] imageData = new byte[length];
+                            reader.GetBytes(columnIndex, 0, imageData, 0, (int)length);
+                            item.ImageData = imageData;
+                        }
+
+                        cardImages.Add(item);
+                    }
+                    connection.Close();
+                }
+            }
+            return cardImages;
         }
     }
 }

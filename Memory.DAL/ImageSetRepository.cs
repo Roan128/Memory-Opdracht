@@ -1,9 +1,10 @@
 ﻿using Memory.BLL.BusinessObjects;
+using Memory.BLL.Interfaces;
 using Microsoft.Data.SqlClient;
 
 namespace Memory.DAL
 {
-    public class ImageSetRepository
+    public class ImageSetRepository : IImageSetRepository
     {
         public string Connectionstring { get; set; } = @"Data Source=(localdb)\mssqllocaldb;Database=ScoreDb;Trusted_Connection=True;MultipleActiveResultSets=true";
 
@@ -25,6 +26,32 @@ namespace Memory.DAL
                 }
             }
             return recordsAffected > 0;
+        }
+
+        public ICollection<ImageSet> GetAll()
+        {
+            var sets = new List<ImageSet>();
+            string sql = "SELECT Id, Name FROM ImageSet;";
+
+            using (var connection = new SqlConnection(Connectionstring))
+            {
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var item = new ImageSet();
+                        item.Id = reader.GetGuid(0);
+                        item.Name = reader.GetString(1);
+
+                        sets.Add(item);
+                    }
+                    connection.Close();
+                }
+            }
+            return sets;
         }
     }
 }
