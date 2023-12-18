@@ -1,63 +1,51 @@
-﻿using Memory.BLL.BusinessObjects;
-using Memory.DAL.Services;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows;
+﻿namespace Memory.GUI;
 
-namespace Memory.GUI
+public partial class SetCreationPopup : Window
 {
-    /// <summary>
-    /// Interaction logic for SetCreationPopup.xaml
-    /// </summary>
-    public partial class SetCreationPopup : Window
+    public ImageService ImageService { get; set; } = new ImageService();
+
+    public ImageSetService SetService { get; set; } = new ImageSetService();
+
+    public List<CardImage> CardImages { get; set; } = new List<CardImage> { };
+
+    public event EventHandler onClose;
+
+    public SetCreationPopup()
     {
-        public ImageService ImageService { get; set; } = new ImageService();
+        InitializeComponent();
+    }
 
-        public ImageSetService SetService { get; set; } = new ImageSetService();
+    private void SetCreateBtn_Click(object sender, RoutedEventArgs e)
+    {
+        ImageSet set = new ImageSet(NameTextBox.Text);
+        CardImages.ForEach(c => c.SetId = set.Id);
+        SetService.UploadSet(set);
+        ImageService.UploadImages(CardImages);
 
-        public List<CardImage> CardImages { get; set; } = new List<CardImage> { };
+        onClose.Invoke(this, EventArgs.Empty);
+        Close();
+    }
 
-        public event EventHandler onClose;
-
-        public SetCreationPopup()
+    private void PickImagesBtn_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog
         {
-            InitializeComponent();
-        }
+            Filter = "Image Files (*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All files (*.*)|*.*",
+            Title = "Select Image",
+            Multiselect = true // Allow selecting multiple images
+        };
 
-        private void SetCreateBtn_Click(object sender, RoutedEventArgs e)
+        if (openFileDialog.ShowDialog() == true)
         {
-            ImageSet set = new ImageSet(NameTextBox.Text);
-            CardImages.ForEach(c => c.SetId = set.Id);
-            SetService.UploadSet(set);
-            ImageService.UploadImages(CardImages);
+            // Handle the selected image files
+            string[] selectedFiles = openFileDialog.FileNames;
 
-            onClose.Invoke(this, EventArgs.Empty);
-            Close();
-        }
-
-        private void PickImagesBtn_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            // Process the selected files (e.g., upload or save them)
+            foreach (string filePath in selectedFiles)
             {
-                Filter = "Image Files (*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All files (*.*)|*.*",
-                Title = "Select Image",
-                Multiselect = true // Allow selecting multiple images
-            };
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                // Handle the selected image files
-                string[] selectedFiles = openFileDialog.FileNames;
-
-                // Process the selected files (e.g., upload or save them)
-                foreach (string filePath in selectedFiles)
-                {
-                    byte[] imageData = File.ReadAllBytes(filePath);
-                    CardImage image = new CardImage(imageData);
-                    CardImages.Add(image);
-                }
+                byte[] imageData = File.ReadAllBytes(filePath);
+                CardImage image = new CardImage(imageData);
+                CardImages.Add(image);
             }
         }
     }

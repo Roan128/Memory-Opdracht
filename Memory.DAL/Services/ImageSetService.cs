@@ -13,8 +13,7 @@ namespace Memory.DAL.Services
 
         public List<ImageSet> GetImageSets()
         {
-            List<ImageSet> sets = new List<ImageSet>();
-            sets = (List<ImageSet>)imageSetRepository.GetAll();
+            var sets = (List<ImageSet>)imageSetRepository.GetAll();
             return sets;
         }
     }

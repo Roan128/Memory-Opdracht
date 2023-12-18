@@ -1,10 +1,5 @@
-﻿using System.Windows;
+﻿namespace Memory.GUI;
 
-namespace Memory.GUI;
-
-/// <summary>
-/// Interaction logic for App.xaml
-/// </summary>
 public partial class App : Application
 {
 }

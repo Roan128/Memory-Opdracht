@@ -1,8 +1,4 @@
-﻿using Memory.BLL.Interfaces;
-using Memory.Model.BusinessObjects;
-using Microsoft.Data.SqlClient;
-
-namespace Memory.DAL;
+﻿namespace Memory.DAL;
 
 public class ScoreRepository : IScoreRepository
 {

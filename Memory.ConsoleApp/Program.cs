@@ -1,5 +1,5 @@
-﻿using Memory.DAL.Services;
-using Memory.Model.BusinessObjects;
+﻿using Memory.BLL.BusinessObjects;
+using Memory.DAL.Services;
 
 Console.WriteLine("Welkom, geef je naam op.");
 string name = Console.ReadLine();

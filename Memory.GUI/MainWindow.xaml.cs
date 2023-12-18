@@ -1,8 +1,5 @@
-﻿using System.Windows;
-namespace Memory.GUI;
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
+﻿namespace Memory.GUI;
+
 public partial class MainWindow : Window
 {
     public MainWindow()

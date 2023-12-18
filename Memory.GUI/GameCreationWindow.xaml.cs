@@ -1,16 +1,5 @@
-﻿using Memory.BLL.BusinessObjects;
-using Memory.DAL.Services;
-using Memory.Model.BusinessObjects;
-using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+﻿namespace Memory.GUI;
 
-namespace Memory.GUI;
-
-/// <summary>
-/// Interaction logic for Window1.xaml
-/// </summary>
 public partial class GameCreationWindow : Window
 {
     private ImageSetService imageSetService { get; set; }
@@ -26,6 +15,7 @@ public partial class GameCreationWindow : Window
         DisplayedSets.ItemsSource = imageSetService.GetImageSets();
     }
 
+    //-------- Buttons -----------//
     private void StartBtn_Click(object sender, RoutedEventArgs e)
     {
         if (selectedSet == null)
@@ -57,28 +47,6 @@ public partial class GameCreationWindow : Window
             gameWindow.Show();
             Close();
         }
-
-    }
-
-    //Teststatus: 
-    private bool IsValidNumber(string input)
-    {
-        if (int.TryParse(input, out _))
-        {
-            if (int.Parse(input) <= 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        else
-        {
-            return false;
-        }
-
     }
 
     private void CreateSetBtn_Click(object sender, RoutedEventArgs e)
@@ -86,11 +54,6 @@ public partial class GameCreationWindow : Window
         SetCreationPopup popup = new SetCreationPopup();
         popup.onClose += HandleCustomEvent;
         popup.Show();
-    }
-
-    private void HandleCustomEvent(object? sender, EventArgs e)
-    {
-        DisplayedSets.ItemsSource = imageSetService.GetImageSets();
     }
 
     private void SetSelect_Click(object sender, RoutedEventArgs e)
@@ -122,8 +85,30 @@ public partial class GameCreationWindow : Window
                 button.Background = Brushes.Blue;
             }
         }
+    }
 
+    private bool IsValidNumber(string input)
+    {
+        if (int.TryParse(input, out _))
+        {
+            if (int.Parse(input) <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
 
+    }
 
+    private void HandleCustomEvent(object? sender, EventArgs e)
+    {
+        DisplayedSets.ItemsSource = imageSetService.GetImageSets();
     }
 }

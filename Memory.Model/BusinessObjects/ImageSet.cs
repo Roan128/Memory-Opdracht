@@ -1,19 +1,18 @@
-﻿namespace Memory.BLL.BusinessObjects
+﻿namespace Memory.BLL.BusinessObjects;
+
+public class ImageSet
 {
-    public class ImageSet
+    public Guid Id { get; set; }
+
+    public string Name { get; set; }
+
+    public ImageSet(string name)
     {
-        public Guid Id { get; set; }
+        Name = name;
+        Id = Guid.NewGuid();
+    }
 
-        public string Name { get; set; }
-
-        public ImageSet(string name)
-        {
-            Name = name;
-            Id = Guid.NewGuid();
-        }
-
-        public ImageSet()
-        {
-        }
+    public ImageSet()
+    {
     }
 }

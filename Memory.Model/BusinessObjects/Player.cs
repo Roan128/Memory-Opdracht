@@ -1,4 +1,4 @@
-﻿namespace Memory.Model.BusinessObjects;
+﻿namespace Memory.BLL.BusinessObjects;
 
 public class Player
 {

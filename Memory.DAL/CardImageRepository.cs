@@ -1,109 +1,104 @@
-﻿using Memory.BLL.BusinessObjects;
-using Memory.BLL.Interfaces;
-using Microsoft.Data.SqlClient;
+﻿namespace Memory.DAL;
 
-namespace Memory.DAL
+public class CardImageRepository : ICardImageRepository
 {
-    public class CardImageRepository : ICardImageRepository
+    public string Connectionstring { get; set; } = @"Data Source=(localdb)\mssqllocaldb;Database=ScoreDb;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+    public bool Create(CardImage businessObject)
     {
-        public string Connectionstring { get; set; } = @"Data Source=(localdb)\mssqllocaldb;Database=ScoreDb;Trusted_Connection=True;MultipleActiveResultSets=true";
+        throw new NotImplementedException();
+    }
 
-        public bool Create(CardImage businessObject)
+    public bool CreateMultiple(List<CardImage> cardImages)
+    {
+        foreach (var cardImage in cardImages)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool CreateMultiple(List<CardImage> cardImages)
-        {
-            foreach (var cardImage in cardImages)
-            {
-                string sqlQuery = "INSERT INTO Image (Id, SetId, ImageData) VALUES (@Id, @SetId, @ImageData);";
-
-                using (var connection = new SqlConnection(Connectionstring))
-                {
-                    using (var command = new SqlCommand(sqlQuery, connection))
-                    {
-                        command.Parameters.AddWithValue("Id", cardImage.Id);
-                        command.Parameters.AddWithValue("SetId", cardImage.SetId);
-                        command.Parameters.AddWithValue("ImageData", cardImage.ImageData);
-
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                    }
-                }
-            }
-            return true;
-        }
-
-        public ICollection<CardImage> GetAll()
-        {
-            var cardImages = new List<CardImage>();
-            string sql = "SELECT Id, SetId, ImageData FROM Image;";
+            string sqlQuery = "INSERT INTO Image (Id, SetId, ImageData) VALUES (@Id, @SetId, @ImageData);";
 
             using (var connection = new SqlConnection(Connectionstring))
             {
-                using (var command = new SqlCommand(sql, connection))
+                using (var command = new SqlCommand(sqlQuery, connection))
                 {
+                    command.Parameters.AddWithValue("Id", cardImage.Id);
+                    command.Parameters.AddWithValue("SetId", cardImage.SetId);
+                    command.Parameters.AddWithValue("ImageData", cardImage.ImageData);
+
                     connection.Open();
-                    var reader = command.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        var item = new CardImage();
-                        item.Id = reader.GetGuid(0);
-                        item.SetId = reader.GetGuid(1);
-                        int columnIndex = reader.GetOrdinal("ImageData");
-
-                        if (!reader.IsDBNull(columnIndex))
-                        {
-                            long length = reader.GetBytes(columnIndex, 0, null, 0, 0);
-                            byte[] imageData = new byte[length];
-                            reader.GetBytes(columnIndex, 0, imageData, 0, (int)length);
-                            item.ImageData = imageData;
-                        }
-
-                        cardImages.Add(item);
-                    }
+                    command.ExecuteNonQuery();
                     connection.Close();
                 }
             }
-            return cardImages;
         }
+        return true;
+    }
 
-        public List<CardImage> GetImagesBySetId(Guid setId)
+    public ICollection<CardImage> GetAll()
+    {
+        var cardImages = new List<CardImage>();
+        string sql = "SELECT Id, SetId, ImageData FROM Image;";
+
+        using (var connection = new SqlConnection(Connectionstring))
         {
-            var cardImages = new List<CardImage>();
-            string sql = $"SELECT Id, SetId, ImageData FROM Image WHERE SetId = '{setId}'";
-
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var command = new SqlCommand(sql, connection))
             {
-                using (var command = new SqlCommand(sql, connection))
+                connection.Open();
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
                 {
-                    connection.Open();
-                    var reader = command.ExecuteReader();
+                    var item = new CardImage();
+                    item.Id = reader.GetGuid(0);
+                    item.SetId = reader.GetGuid(1);
+                    int columnIndex = reader.GetOrdinal("ImageData");
 
-                    while (reader.Read())
+                    if (!reader.IsDBNull(columnIndex))
                     {
-                        var item = new CardImage();
-                        item.Id = reader.GetGuid(0);
-                        item.SetId = reader.GetGuid(1);
-                        int columnIndex = reader.GetOrdinal("ImageData");
-
-                        if (!reader.IsDBNull(columnIndex))
-                        {
-                            long length = reader.GetBytes(columnIndex, 0, null, 0, 0);
-                            byte[] imageData = new byte[length];
-                            reader.GetBytes(columnIndex, 0, imageData, 0, (int)length);
-                            item.ImageData = imageData;
-                        }
-
-                        cardImages.Add(item);
+                        long length = reader.GetBytes(columnIndex, 0, null, 0, 0);
+                        byte[] imageData = new byte[length];
+                        reader.GetBytes(columnIndex, 0, imageData, 0, (int)length);
+                        item.ImageData = imageData;
                     }
-                    connection.Close();
+
+                    cardImages.Add(item);
                 }
+                connection.Close();
             }
-            return cardImages;
         }
+        return cardImages;
+    }
+
+    public List<CardImage> GetImagesBySetId(Guid setId)
+    {
+        var cardImages = new List<CardImage>();
+        string sql = $"SELECT Id, SetId, ImageData FROM Image WHERE SetId = '{setId}'";
+
+        using (var connection = new SqlConnection(Connectionstring))
+        {
+            using (var command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var item = new CardImage();
+                    item.Id = reader.GetGuid(0);
+                    item.SetId = reader.GetGuid(1);
+                    int columnIndex = reader.GetOrdinal("ImageData");
+
+                    if (!reader.IsDBNull(columnIndex))
+                    {
+                        long length = reader.GetBytes(columnIndex, 0, null, 0, 0);
+                        byte[] imageData = new byte[length];
+                        reader.GetBytes(columnIndex, 0, imageData, 0, (int)length);
+                        item.ImageData = imageData;
+                    }
+
+                    cardImages.Add(item);
+                }
+                connection.Close();
+            }
+        }
+        return cardImages;
     }
 }

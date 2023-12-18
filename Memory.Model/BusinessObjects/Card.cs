@@ -1,34 +1,26 @@
-﻿using Memory.BLL.BusinessObjects;
+﻿namespace Memory.BLL.BusinessObjects;
 
-namespace Memory.Model.BusinessObjects
+public class Card
 {
-    public class Card
+    public int Id { get; set; }
+
+    public int CardValue { get; set; }
+
+    public bool TurnedOver { get; set; } = false;
+
+    public CardImage? Image { get; set; }
+
+    //Zonder image
+    public Card(int id, int value)
     {
-        public int Id { get; set; }
+        Id = id;
+        CardValue = value;
+    }
 
-        public int CardValue { get; set; }
-
-        public bool TurnedOver { get; set; } = false;
-
-        public CardImage? Image { get; set; }
-
-        public Card(int id)
-        {
-            Id = id;
-        }
-
-        //Zonder image
-        public Card(int id, int value)
-        {
-            Id = id;
-            CardValue = value;
-        }
-
-        public Card(int id, CardImage image, int value)
-        {
-            Id = id;
-            Image = image;
-            CardValue = value;
-        }
+    public Card(int id, CardImage image, int value)
+    {
+        Id = id;
+        Image = image;
+        CardValue = value;
     }
 }

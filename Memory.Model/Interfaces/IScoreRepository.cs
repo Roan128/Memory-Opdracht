@@ -1,4 +1,4 @@
-﻿using Memory.Model.BusinessObjects;
+﻿using Memory.BLL.BusinessObjects;
 
 namespace Memory.BLL.Interfaces;
 
