@@ -10,7 +10,7 @@ public partial class GameWindow : Window
 
     public List<Button> Selected { get; set; } = new List<Button>();
 
-    public bool UsesSet { get; set; } = false;
+    private bool UsesSet { get; set; } = false;
 
     //Stap 1: opzetten game window zonder set
     public GameWindow(Game game, Player player)

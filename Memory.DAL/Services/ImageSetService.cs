@@ -1,20 +1,17 @@
-﻿using Memory.BLL.BusinessObjects;
+﻿namespace Memory.DAL.Services;
 
-namespace Memory.DAL.Services
+public class ImageSetService
 {
-    public class ImageSetService
+    ImageSetRepository imageSetRepository = new ImageSetRepository();
+
+    public void UploadSet(ImageSet set)
     {
-        ImageSetRepository imageSetRepository = new ImageSetRepository();
+        imageSetRepository.Create(set);
+    }
 
-        public void UploadSet(ImageSet set)
-        {
-            imageSetRepository.Create(set);
-        }
-
-        public List<ImageSet> GetImageSets()
-        {
-            var sets = (List<ImageSet>)imageSetRepository.GetAll();
-            return sets;
-        }
+    public List<ImageSet> GetImageSets()
+    {
+        var sets = (List<ImageSet>)imageSetRepository.GetAll();
+        return sets;
     }
 }

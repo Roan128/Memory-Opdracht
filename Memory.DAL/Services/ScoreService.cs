@@ -1,20 +1,17 @@
-﻿using Memory.Model.BusinessObjects;
+﻿namespace Memory.DAL.Services;
 
-namespace Memory.DAL.Services
+public class ScoreService
 {
-    public class ScoreService
+    ScoreRepository ScoreRepository = new ScoreRepository();
+
+    public List<Score> GetHighScores()
     {
-        ScoreRepository ScoreRepository = new ScoreRepository();
+        List<Score> topScoreList = ScoreRepository.GetAll().OrderByDescending(c => c.ScoreAmount).Take(10).ToList();
+        return topScoreList;
+    }
 
-        public List<Score> GetHighScores()
-        {
-            List<Score> topScoreList = ScoreRepository.GetAll().OrderByDescending(c => c.ScoreAmount).Take(10).ToList();
-            return topScoreList;
-        }
-
-        public void SaveScore(Score score)
-        {
-            ScoreRepository.Create(score);
-        }
+    public void SaveScore(Score score)
+    {
+        ScoreRepository.Create(score);
     }
 }
