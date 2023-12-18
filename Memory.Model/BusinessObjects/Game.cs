@@ -8,6 +8,4 @@ public class Game
     public List<Card> Cards = new List<Card>();
 
     public int Attempts { get; set; }
-
-    private static Random rng = new Random();
 }

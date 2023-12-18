@@ -8,10 +8,11 @@ Player player = new Player(name);
 
 Game game = new Game();
 ScoreService scoreService = new ScoreService();
-game.GenerateCards(player.CardAmount);
-game.ShuffleCards();
+GameService gameService = new GameService(game);
+gameService.GenerateCards(player.CardAmount);
+gameService.ShuffleCards();
 
-while (!game.PlayGame())
+while (!gameService.PlayGame())
 {
     continue;
 }
@@ -23,6 +24,7 @@ score.CalculateScore(game);
 scoreService.SaveScore(score);
 Console.WriteLine($"Your score is: {score.ScoreAmount}\n");
 Console.WriteLine("------ \n Top 10: \n------");
+
 foreach (Score scoreItem in scoreService.GetHighScores())
 {
     if (scoreItem.Id != score.Id)

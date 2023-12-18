@@ -10,5 +10,11 @@ namespace Memory.DAL.Services
         {
             _CardImageRepository.CreateMultiple(images);
         }
+
+        public List<CardImage> getImagesBySetId(ImageSet set)
+        {
+            var images = _CardImageRepository.GetImagesBySetId(set.Id);
+            return images;
+        }
     }
 }

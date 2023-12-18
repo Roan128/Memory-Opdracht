@@ -1,4 +1,5 @@
 ﻿using Memory.BLL.BusinessObjects;
+using Memory.DAL.Services;
 using Memory.Model.BusinessObjects;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,13 @@ namespace Memory.GUI
     {
         public Game Game { get; set; }
 
+        public GameService gameService { get; set; }
+
         public Player Player { get; set; }
 
         public List<Button> Selected { get; set; } = new List<Button>();
+
+        public bool UsesSet { get; set; } = false;
 
         //Stap 1: opzetten game window zonder set
         public GameWindow(Game game, Player player)
@@ -28,9 +33,11 @@ namespace Memory.GUI
             this.Game = game;
             this.Player = player;
 
+            gameService = new GameService(Game);
+
             //Kaarten genereren op basis van aantal aangegeven kaarten.
-            game.GenerateCards(player.CardAmount);
-            game.ShuffleCards();
+            gameService.GenerateCards(player.CardAmount);
+            gameService.ShuffleCards();
 
             //De datasource meegeven zodat kaarten weergegeven worden.
             DisplayedCards.ItemsSource = game.Cards;
@@ -47,9 +54,14 @@ namespace Memory.GUI
 
             this.Game = game;
             this.Player = player;
+            gameService = new GameService(Game);
 
-            game.GenerateCards();
-            game.ShuffleCards();
+            gameService.GenerateCards(set);
+            gameService.ShuffleCards();
+            UsesSet = true;
+
+            DisplayedCards.ItemsSource = game.Cards;
+            UpdateAttemptsLabel();
         }
 
         //Gokken of kaarten gelijk zijn.
@@ -89,7 +101,7 @@ namespace Memory.GUI
             UpdateAttemptsLabel();
 
             //Na elke guess even kijken of de game eigenlijk niet al over is (Nieuwe button zodat er naar de score gegaan kan worden nog neerzetten.)
-            if (!Game.CheckIfGameOver())
+            if (!gameService.CheckIfGameOver())
             {
                 FinishBtn.Visibility = Visibility.Visible;
             }

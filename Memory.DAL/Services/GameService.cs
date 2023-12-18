@@ -6,6 +6,17 @@ namespace Memory.DAL.Services
 {
     public class GameService
     {
+        public Game Game { get; set; }
+
+        public ImageService ImageService { get; set; } = new ImageService();
+
+        private static Random _rng = new Random();
+
+        public GameService(Game game)
+        {
+            this.Game = game;
+        }
+
         //Functie om een game te starten. Wordt alleen in console gebruikt.
         public bool PlayGame()
         {
@@ -30,7 +41,7 @@ namespace Memory.DAL.Services
 
             int i = 0;
             int value = 0;
-            while (Cards.Count() < parsedAmount * 2)
+            while (Game.Cards.Count() < parsedAmount * 2)
             {
                 if (i % 2 == 0)
                 {
@@ -39,9 +50,9 @@ namespace Memory.DAL.Services
 
                 i++;
                 Card card = new Card(i, value);
-                Cards.Add(card);
+                Game.Cards.Add(card);
             }
-            return Cards;
+            return Game.Cards;
         }
 
         //Aanmaken van kaarten op basis van de meegegeven set.
@@ -49,9 +60,22 @@ namespace Memory.DAL.Services
         //Per image twee kaarten maken. 
         public List<Card> GenerateCards(ImageSet set)
         {
-            List<CardImage> images = new List<CardImage>();
-            images = image
-            return Cards;
+            int i = 0;
+            var images = ImageService.getImagesBySetId(set);
+
+            foreach (CardImage image in images)
+            {
+                // Create two cards for each image
+                Card card1 = new Card(i, image);
+                Card card2 = new Card(i++, image);
+
+                // Add the cards to the list
+                Game.Cards.Add(card1);
+                Game.Cards.Add(card2);
+                i++;
+            }
+
+            return Game.Cards;
         }
 
 
@@ -60,8 +84,8 @@ namespace Memory.DAL.Services
         {
             Console.Clear();
             int i = 9;
-            Console.WriteLine($"Attempt number: {Attempts + 1}");
-            foreach (Card card in Cards)
+            Console.WriteLine($"Attempt number: {Game.Attempts + 1}");
+            foreach (Card card in Game.Cards)
             {
 
                 if (card.TurnedOver)
@@ -70,7 +94,7 @@ namespace Memory.DAL.Services
                 }
                 else
                 {
-                    Console.WriteLine($" [{Cards.Count() - i}] ");
+                    Console.WriteLine($" [{Game.Cards.Count() - i}] ");
                 }
                 i--;
             }
@@ -79,8 +103,8 @@ namespace Memory.DAL.Services
         //Schud alle kaarten door elkaar heen.
         public void ShuffleCards()
         {
-            var shuffledcards = Cards.OrderBy(a => rng.Next()).ToList();
-            Cards = shuffledcards;
+            var shuffledcards = Game.Cards.OrderBy(a => _rng.Next()).ToList();
+            Game.Cards = shuffledcards;
         }
 
         //Functie om een kaart te kiezen.
@@ -100,6 +124,8 @@ namespace Memory.DAL.Services
                 }
                 catch (CardNotFoundException e)
                 {
+                    Console.Clear();
+                    DisplayCards();
                     Console.WriteLine($"Error: {e.Message}");
                     continue;
                 }
@@ -113,6 +139,8 @@ namespace Memory.DAL.Services
                 }
                 catch (CardNotFoundException e)
                 {
+                    Console.Clear();
+                    DisplayCards();
                     Console.WriteLine($"Error: {e.Message}");
                     continue;
                 }
@@ -131,7 +159,7 @@ namespace Memory.DAL.Services
         {
             try
             {
-                Card card = Cards[int.Parse(number) - 1];
+                Card card = Game.Cards[int.Parse(number) - 1];
                 return card;
             }
             catch (Exception) //Uit parse kunnen meerdere exceptions ontstaan, daarom checken op algemene exception.
@@ -151,7 +179,7 @@ namespace Memory.DAL.Services
                 choice1.TurnedOver = true;
                 choice2.TurnedOver = true;
                 Console.WriteLine("Correct!");
-                Attempts++;
+                Game.Attempts++;
                 return true;
             }
             else if (choice1.Id == choice2.Id)
@@ -167,7 +195,7 @@ namespace Memory.DAL.Services
             else
             {
                 Console.WriteLine("Those are not the same cards! Try again. An attempt has been added.");
-                Attempts++;
+                Game.Attempts++;
                 return true;
             }
         }
@@ -175,11 +203,11 @@ namespace Memory.DAL.Services
         //Checked na elke beurt of alle kaarten omgedraaid zijn.
         public bool CheckIfGameOver()
         {
-            int turnedOverCards = Cards.Where(c => c.TurnedOver.Equals(true)).ToList().Count();
+            int turnedOverCards = Game.Cards.Where(c => c.TurnedOver.Equals(true)).ToList().Count();
 
-            if (turnedOverCards == Cards.Count())
+            if (turnedOverCards == Game.Cards.Count())
             {
-                EndTime = DateTime.Now;
+                Game.EndTime = DateTime.Now;
                 return false;
             }
             else
@@ -189,4 +217,4 @@ namespace Memory.DAL.Services
         }
     }
 }
-}
+

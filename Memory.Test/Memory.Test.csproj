@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Memory.DAL\Memory.DAL.csproj" />
     <ProjectReference Include="..\Memory.Model\Memory.BLL.csproj" />
   </ItemGroup>
 

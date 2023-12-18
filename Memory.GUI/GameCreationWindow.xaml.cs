@@ -15,7 +15,9 @@ public partial class GameCreationWindow : Window
 {
     private ImageSetService imageSetService { get; set; }
 
-    private ImageSet? selectedSet { get; set; }
+    private ImageSet? selectedSet { get; set; } = null;
+
+    private Button? selectedButton { get; set; } = null;
 
     public GameCreationWindow()
     {
@@ -26,7 +28,7 @@ public partial class GameCreationWindow : Window
 
     private void StartBtn_Click(object sender, RoutedEventArgs e)
     {
-        if (selectedSet.Equals(null))
+        if (selectedSet == null)
         {
             if (!IsValidNumber(TextBoxCards.Text) || TextBoxName.Text.Equals("") || TextBoxName.Text.Equals(null))
             {
@@ -97,11 +99,31 @@ public partial class GameCreationWindow : Window
         TextBoxCards.Text = "Disabled...";
 
         //Button setten
-        Button button = (Button)sender;
-        if (button.DataContext is ImageSet clickedSet)
+        if (selectedSet == null)
         {
-            selectedSet = clickedSet;
-            button.Background = Brushes.Blue;
+            Button button = (Button)sender;
+            if (button.DataContext is ImageSet clickedSet)
+            {
+                selectedSet = clickedSet;
+                selectedButton = button;
+                button.Background = Brushes.Blue;
+            }
         }
+        else
+        {
+            selectedSet = null;
+            selectedButton.Background = new SolidColorBrush(Color.FromRgb(35, 83, 161));
+
+            Button button = (Button)sender;
+            if (button.DataContext is ImageSet clickedSet)
+            {
+                selectedSet = clickedSet;
+                selectedButton = button;
+                button.Background = Brushes.Blue;
+            }
+        }
+
+
+
     }
 }
