@@ -53,7 +53,7 @@ public partial class GameCreationWindow : Window
             string playername = TextBoxName.Text;
             Player player = new Player(playername);
             Game game = new Game();
-            GameWindow gameWindow = new GameWindow(game, player);
+            GameWindow gameWindow = new GameWindow(game, player, selectedSet);
             gameWindow.Show();
             Close();
         }

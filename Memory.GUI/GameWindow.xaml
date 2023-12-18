@@ -39,7 +39,7 @@
                         BorderThickness="1"
                         Click="Button_Click"
                         >
-                        <Run Text="{Binding Id, StringFormat='Id: {0}'}"></Run>
+                        <ContentControl x:Name="buttonContentControl"></ContentControl>
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

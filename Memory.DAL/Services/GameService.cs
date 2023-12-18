@@ -26,7 +26,6 @@ namespace Memory.DAL.Services
                 ChooseCards();
                 return false;
             }
-
             return true;
         }
 
@@ -65,10 +64,10 @@ namespace Memory.DAL.Services
 
             foreach (CardImage image in images)
             {
+                int id2 = i + 1;
                 // Create two cards for each image
-                Card card1 = new Card(i, image);
-                Card card2 = new Card(i++, image);
-
+                Card card1 = new Card(i, image, i);
+                Card card2 = new Card(id2, image, i);
                 // Add the cards to the list
                 Game.Cards.Add(card1);
                 Game.Cards.Add(card2);
@@ -87,15 +86,7 @@ namespace Memory.DAL.Services
             Console.WriteLine($"Attempt number: {Game.Attempts + 1}");
             foreach (Card card in Game.Cards)
             {
-
-                if (card.TurnedOver)
-                {
-                    Console.WriteLine($" [X] Val= {card.CardValue}");
-                }
-                else
-                {
-                    Console.WriteLine($" [{Game.Cards.Count() - i}] ");
-                }
+                Console.WriteLine(card.TurnedOver ? $" [X] Val= {card.CardValue}" : $" [{Game.Cards.Count() - i}] ");
                 i--;
             }
         }

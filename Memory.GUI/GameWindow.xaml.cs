@@ -2,9 +2,11 @@
 using Memory.DAL.Services;
 using Memory.Model.BusinessObjects;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace Memory.GUI
 {
@@ -76,7 +78,16 @@ namespace Memory.GUI
             {
                 if (selectedButton.DataContext is Card card)
                 {
-                    selectedButton.Content = $"Value: {card.CardValue}";
+                    if (UsesSet == false)
+                    {
+                        selectedButton.Content = $"Value: {card.CardValue}";
+                    }
+                    else
+                    {
+                        Image imageControl = new Image();
+                        imageControl.Source = LoadImage(card.Image.ImageData);
+                        selectedButton.Content = imageControl;
+                    }
                     cards.Add(card);
                 }
             }
@@ -145,11 +156,6 @@ namespace Memory.GUI
             ContinueBtn.Visibility = Visibility.Hidden;
         }
 
-        private void UpdateAttemptsLabel()
-        {
-            AttemptsLabel.Content = $"Attempts: {Game.Attempts}";
-        }
-
         private void FinishBtn_Click(object sender, RoutedEventArgs e)
         {
             ScoreWindow scoreWindow = new ScoreWindow(Game, Player);
@@ -157,6 +163,27 @@ namespace Memory.GUI
             Close();
         }
 
+        private void UpdateAttemptsLabel()
+        {
+            AttemptsLabel.Content = $"Attempts: {Game.Attempts}";
+        }
 
+        private static BitmapImage LoadImage(byte[] imageData)
+        {
+            if (imageData == null || imageData.Length == 0) return null;
+            var image = new BitmapImage();
+            using (var mem = new MemoryStream(imageData))
+            {
+                mem.Position = 0;
+                image.BeginInit();
+                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.UriSource = null;
+                image.StreamSource = mem;
+                image.EndInit();
+            }
+            image.Freeze();
+            return image;
+        }
     }
 }

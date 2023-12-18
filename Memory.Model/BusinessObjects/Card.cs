@@ -6,7 +6,7 @@ namespace Memory.Model.BusinessObjects
     {
         public int Id { get; set; }
 
-        public int? CardValue { get; set; }
+        public int CardValue { get; set; }
 
         public bool TurnedOver { get; set; } = false;
 
@@ -24,10 +24,11 @@ namespace Memory.Model.BusinessObjects
             CardValue = value;
         }
 
-        public Card(int id, CardImage image)
+        public Card(int id, CardImage image, int value)
         {
             Id = id;
             Image = image;
+            CardValue = value;
         }
     }
 }
