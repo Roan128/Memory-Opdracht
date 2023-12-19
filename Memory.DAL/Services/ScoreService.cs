@@ -2,7 +2,17 @@
 
 public class ScoreService
 {
-    ScoreRepository ScoreRepository = new ScoreRepository();
+    IScoreRepository ScoreRepository { get; set; }
+
+    public ScoreService()
+    {
+        ScoreRepository = new ScoreRepository();
+    }
+
+    public ScoreService(IScoreRepository scoreRepository)
+    {
+        ScoreRepository = scoreRepository;
+    }
 
     public List<Score> GetHighScores()
     {
@@ -10,8 +20,15 @@ public class ScoreService
         return topScoreList;
     }
 
-    public void SaveScore(Score score)
+    public bool SaveScore(Score score)
     {
-        ScoreRepository.Create(score);
+        if (ScoreRepository.Create(score))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

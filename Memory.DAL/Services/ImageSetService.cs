@@ -4,6 +4,16 @@ public class ImageSetService
 {
     ImageSetRepository imageSetRepository = new ImageSetRepository();
 
+    public ImageSetService()
+    {
+
+    }
+
+    public ImageSetService(ImageSetRepository imagesetRepository)
+    {
+        imageSetRepository = imagesetRepository;
+    }
+
     public void UploadSet(ImageSet set)
     {
         imageSetRepository.Create(set);
